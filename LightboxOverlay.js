@@ -166,15 +166,20 @@ export default class LightboxOverlay extends Component {
     this.setState({
       isAnimating: true,
     });
+    let isClose = false;
+    this.state.openVal.addListener(({value}) => {
+      if (!isClose && value < 0.1) {
+        isClose = true;
+        this.setState({
+          isAnimating: false,
+        });
+        this.props.onClose();
+      }
+    })
     Animated.spring(
       this.state.openVal,
       { toValue: 0, ...this.props.springConfig }
-    ).start(() => {
-      this.setState({
-        isAnimating: false,
-      });
-      this.props.onClose();
-    });
+    ).start();
   }
 
   componentWillReceiveProps(props) {

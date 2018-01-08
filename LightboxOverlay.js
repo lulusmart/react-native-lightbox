@@ -210,14 +210,6 @@ export default class LightboxOverlay extends Component {
       handlers = this._panResponder.panHandlers;
     }
 
-    let dragStyle;
-    if(isPanning) {
-      dragStyle = {
-        transform: [{translateY: this.state.pan}]
-      };
-      lightboxOpacityStyle.opacity = this.state.pan.interpolate({inputRange: [-WINDOW_HEIGHT, 0, WINDOW_HEIGHT], outputRange: [0, 1, 0]});
-    }
-
     let targetHeight;
     let targetTop
     if (this.props.targetHeight) {
@@ -226,6 +218,17 @@ export default class LightboxOverlay extends Component {
     } else {
       targetHeight = WINDOW_HEIGHT;
       targetTop = target.y + STATUS_BAR_OFFSET;
+    }
+
+    let dragStyle;
+    if(isPanning) {
+      dragStyle = {
+        top: this.state.pan.interpolate({
+          inputRange: [-WINDOW_HEIGHT, 0, WINDOW_HEIGHT],
+          outputRange: [targetTop - WINDOW_HEIGHT, targetTop, targetTop + WINDOW_HEIGHT]
+        })
+      };
+      lightboxOpacityStyle.opacity = this.state.pan.interpolate({inputRange: [-WINDOW_HEIGHT, 0, WINDOW_HEIGHT], outputRange: [0, 1, 0]});
     }
 
     const openStyle = [styles.open, {

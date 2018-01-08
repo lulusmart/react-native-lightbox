@@ -154,7 +154,7 @@ export default class LightboxOverlay extends Component {
     }).start();
     LayoutAnimation.configureNext({
       duration: DEFAULT_DURATION,
-      update: {type: LayoutAnimation.Types.easing}
+      update: {type: LayoutAnimation.Types.easeInEaseOut}
     });
     this.setState({open: true}, () => {
       this.props.didOpen();
@@ -172,7 +172,7 @@ export default class LightboxOverlay extends Component {
     }).start();
     LayoutAnimation.configureNext({
       duration: DEFAULT_DURATION,
-      update: {type: LayoutAnimation.Types.easing}
+      update: {type: LayoutAnimation.Types.easeInEaseOut}
     });
     this.setState({open: false}, () => {
       setTimeout(() => this.props.onClose(), DEFAULT_DURATION);
